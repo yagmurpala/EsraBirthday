@@ -1,0 +1,523 @@
+
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#291c1b">
+  <title>ESRA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+<main>
+
+  <!-- =====================================
+       01 — OPENING CREDITS
+       ===================================== -->
+
+  <section class="scene opening-scene" id="opening">
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="projector-light" aria-hidden="true"></div>
+
+    <div class="scene-frame" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <span>ESRAKUŞUMM </span>
+      <span>01 / OPENING</span>
+    </header>
+
+    <div class="countdown" id="countdown" aria-hidden="true">
+      <span id="countdownNumber">3</span>
+    </div>
+
+    <div class="opening-content" id="openingContent">
+
+      <span class="eyebrow">
+        A VERY SPECIAL BIRTHDAY PRODUCTION
+      </span>
+
+      <p class="opening-intro">
+        Başrolde Esra.
+        <br>
+        Bol kahkaha, biraz dram,
+        <br>
+        fazlasıyla kaos.
+      </p>
+
+      <div class="opening-ornament" aria-hidden="true">
+        <span></span> ✳ <span></span>
+      </div>
+
+      <h1>
+        ESRA
+        <em></em>
+      </h1>
+
+      <p class="opening-subtitle">
+        İyi ki doğdun Esrakuşummm!
+      </p>
+
+      <div class="film-rating">
+        <span>★ ★ ★ ★ ★</span>
+        <small>100% UNUTULMAZ</small>
+      </div>
+
+    </div>
+
+    <button
+      class="primary-action opening-action"
+      id="startFilm"
+      type="button"
+      disabled
+    >
+      Filmi başlat <span>→</span>
+    </button>
+
+    <footer class="scene-footer">
+      <span>OYUNCULAR ESRAKUŞ</span>
+      <span>35 MM · 01/05</span>
+    </footer>
+
+  </section>
+
+
+  <!-- =====================================
+       02 — MAKE A WISH
+       ===================================== -->
+
+  <section class="scene wish-scene" id="wishScene">
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="wish-spotlight" aria-hidden="true"></div>
+    <div class="scene-frame" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <span>ESRA</span>
+      <span>02 / BİR DİLEK TUT</span>
+    </header>
+
+    <div class="wish-heading">
+
+      <span class="eyebrow">
+        FİLM BAŞLAMADAN ÖNCE...
+      </span>
+
+      <h2>
+        Bir dilek tut,
+        <em>Esrakuşumm</em>
+      </h2>
+
+      <p>
+        Hadi bakalımmm, bütün güzel dilekler senin olsun!
+      </p>
+
+    </div>
+
+    <!-- Sinematik doğum günü pastası -->
+    <div class="cake-stage" id="cakeStage">
+
+      <div class="cake-glow" aria-hidden="true"></div>
+
+      <div class="birthday-cake" aria-label="Beş mumlu doğum günü pastası">
+
+        <div class="candles" id="candles" aria-hidden="true">
+
+          <div class="candle">
+            <span class="wick"></span>
+            <span class="flame"></span>
+          </div>
+
+          <div class="candle">
+            <span class="wick"></span>
+            <span class="flame"></span>
+          </div>
+
+          <div class="candle">
+            <span class="wick"></span>
+            <span class="flame"></span>
+          </div>
+
+          <div class="candle">
+            <span class="wick"></span>
+            <span class="flame"></span>
+          </div>
+
+          <div class="candle">
+            <span class="wick"></span>
+            <span class="flame"></span>
+          </div>
+
+        </div>
+
+        <div class="cake-top"></div>
+
+        <div class="cake-body">
+          <div class="cake-icing"></div>
+          <div class="cake-plaque">ESRA ♡</div>
+          <div class="cake-bottom-border"></div>
+        </div>
+
+        <div class="cake-plate"></div>
+        <div class="cake-shadow"></div>
+
+      </div>
+
+      <span class="cake-sparkle sparkle-one">✦</span>
+      <span class="cake-sparkle sparkle-two">✧</span>
+      <span class="cake-sparkle sparkle-three">✧</span>
+
+    </div>
+
+    <div class="wish-bottom">
+
+      <p id="wishMessage" aria-live="polite">
+        Dileğini tut ve mumları söndürrrr.
+      </p>
+
+      <button
+        id="blowCandles"
+        class="blow-button"
+        type="button"
+      >
+        Mumları söndür ♡
+      </button>
+
+      <span class="wish-helper" id="wishHelper">
+        Mumlara üflemek için dokun
+      </span>
+
+      <button
+        id="continueAfterWish"
+        class="primary-action"
+        type="button"
+        hidden
+      >
+        Asıl filme geçelim <span>→</span>
+      </button>
+
+    </div>
+
+    <footer class="scene-footer">
+      <span>LIGHTS · CAMERA · WISH</span>
+      <span>35 MM · 02/05</span>
+    </footer>
+
+  </section>
+
+
+  <!-- =====================================
+       03 — VIP CINEMA TICKET
+       ===================================== -->
+
+  <section class="scene ticket-scene" id="ticketScene">
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="scene-frame" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <span>ESRAKUŞUMM </span>
+      <span>03 / PREMIERE</span>
+    </header>
+
+    <div class="ticket-heading">
+
+      <span class="eyebrow">
+        RESMİ ÖZEL GÖSTERİM
+      </span>
+
+      <h2>
+        Şimdi sıra
+        <em>anılarımızda!</em>
+      </h2>
+
+      <p>
+        Esrakuş özel gösterimine hoş geldiniz.
+      </p>
+
+    </div>
+
+    <div class="ticket" id="ticket">
+
+      <div class="ticket-main">
+
+        <div class="ticket-header">
+          <span>ESRAKUŞUMM CINEMA</span>
+          <span>★ VIP ★</span>
+        </div>
+
+        <span class="ticket-eyebrow">
+          ÖZEL DOĞUM GÜNÜ PRÖMİYERİ
+        </span>
+
+        <div class="ticket-title">
+          ESRA
+          <em></em>
+        </div>
+
+        <div class="ticket-info">
+
+          <div>
+            <small>BAŞROL</small>
+            <strong>Esrakuş</strong>
+          </div>
+
+          <div>
+            <small>FİLM TÜRÜ</small>
+            <strong>Komedi / Kaos</strong>
+          </div>
+
+          <div>
+            <small>KOLTUK</small>
+            <strong>VIP — 01</strong>
+          </div>
+
+          <div>
+            <small>OYUNCU KADROSU</small>
+            <strong>Bizzz ♡</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="ticket-stub">
+
+        <span>ADMIT ONE</span>
+
+        <div class="barcode" aria-hidden="true"></div>
+
+        <span>NO. 0001</span>
+
+      </div>
+
+    </div>
+
+    <button
+      id="openTicket"
+      class="primary-action ticket-action"
+      type="button"
+    >
+      Gösterime başla <span>→</span>
+    </button>
+
+    <p class="ticket-helper">
+      Hazırsan biraz eskiye gidiyoruz.
+    </p>
+
+    <footer class="scene-footer">
+      <span>35 MM · 03/05</span>
+    </footer>
+
+  </section>
+
+
+  <!-- =====================================
+       04 — MEMORY REEL
+       ORİJİNAL ANILAR SAYFASI
+       ===================================== -->
+
+  <section class="memories" id="memories">
+
+    <div class="memory-top">
+      <span>♡　♡　♡</span>
+      <span id="count">01 / 08</span>
+    </div>
+
+    <div class="memory-card" id="memoryCard">
+
+      <div class="media-shell" id="mediaShell">
+
+        <div
+          class="media-ambient"
+          id="mediaAmbient"
+          aria-hidden="true"
+        ></div>
+
+        <img
+          id="galleryPhoto"
+          src="media/esra1.jpg"
+          alt="Esra'nın fotoğrafı"
+          decoding="async"
+        >
+
+        <video
+          id="galleryVideo"
+          playsinline
+          muted
+          preload="metadata"
+          controls
+          controlslist="nodownload noplaybackrate"
+          aria-label="Sessiz anı videosu"
+          style="display:none"
+        ></video>
+
+        <div class="film-rail left" aria-hidden="true"></div>
+        <div class="film-rail right" aria-hidden="true"></div>
+
+        <div class="film-head" aria-hidden="true">
+          <span>ESRAKUŞUMM</span>
+          <span id="frameType">01</span>
+        </div>
+
+        <div class="film-foot" aria-hidden="true">
+          <span>MEMORY REEL</span>
+          <span>♡ 35 MM ♡</span>
+        </div>
+
+      </div>
+
+      <div class="photo-shine" aria-hidden="true"></div>
+
+    </div>
+
+    <div class="memory-description" aria-live="polite">
+
+      <div class="memory-label" id="kind"></div>
+
+      <p
+        class="memory-note"
+        id="memoryNote"
+      ></p>
+
+    </div>
+
+    <div class="nav">
+
+      <button
+        id="prev"
+        type="button"
+        aria-label="Önceki anı"
+      >‹</button>
+
+      <div class="dots" id="dots"></div>
+
+      <button
+        id="next"
+        type="button"
+        aria-label="Sonraki anı"
+      >›</button>
+
+    </div>
+
+    <div class="notice">
+      BİRLİKTE BİRİKTİRDİĞİMİZ ANLAR ♡
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       05 — THE AWARDS / FINAL
+       ===================================== -->
+
+  <section class="scene final-scene" id="finalScene">
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="scene-frame" aria-hidden="true"></div>
+
+    <header class="scene-header">
+      <span>ESRAKUŞUMM / ARCHIVE</span>
+      <span>05 / END FRAME</span>
+    </header>
+
+    <div class="award-content" id="awardContent">
+
+      <span class="eyebrow">
+        AND THE AWARD GOES TO...
+      </span>
+
+      <div class="award-stars" aria-hidden="true">
+        ✦　✧　✦
+      </div>
+
+      <div class="award-laurel" aria-hidden="true">
+        <span class="laurel-left">❧</span>
+        <span class="award-number">01</span>
+        <span class="laurel-right">❧</span>
+      </div>
+
+      <h2>
+        ESROŞŞ!
+      </h2>
+
+      <p class="award-subtitle">
+        Oyuncu Kadrosundaki En İyi Kız
+      </p>
+
+      <div class="award-divider"></div>
+
+      <div class="award-categories">
+        <div>
+          <small>EN İYİ KAHKAHA</small>
+          <strong>Bizzz</strong>
+        </div>
+
+        <div>
+          <small>EN KAOTİK SAHNELER</small>
+          <strong>Yine bizzz</strong>
+        </div>
+
+        <div>
+          <small>EN GÜZEL DEVAM FİLMİ</small>
+          <strong>Henüz çekilmedi...</strong>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="final-message" id="finalMessage">
+
+      <span class="final-eyebrow">
+        DEVAM EDECEK...
+      </span>
+
+      <h2>
+        İyi ki doğdunnn
+        <em>Esrakuşumm!</em>
+      </h2>
+
+      <p>
+        Nice beraber güldüğümüz,
+        eğlendiğimiz ve saçmaladığımız
+        senelereee!
+      </p>
+
+      <span class="final-heart">♡</span>
+
+    </div>
+
+    <button
+      id="backToMemories"
+      class="final-back"
+      type="button"
+    >
+      ← Anılara geri dön
+    </button>
+
+    <footer class="scene-footer">
+      <span>OUR MEMORY REEL</span>
+      <span>35 MM · THE END</span>
+    </footer>
+
+  </section>
+
+</main>
+</body>
+</html>
