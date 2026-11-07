@@ -10,7 +10,7 @@
   >
 
   <meta name="theme-color" content="#291c1b">
-  <title>ESRA</title>
+  <title>ESRA: THE MOVIE</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,25 +25,50 @@
 </head>
 
 <body>
-<main>
+
+<!-- Tek arka plan müziği -->
+<audio
+  id="backgroundMusic"
+  src="media/music.mp3"
+  loop
+  preload="none"
+></audio>
+
+<button
+  id="musicToggle"
+  class="music-toggle"
+  type="button"
+  aria-label="Müziği aç veya kapat"
+  aria-pressed="false"
+  hidden
+>♫</button>
+
+<main id="film">
 
   <!-- =====================================
        01 — OPENING CREDITS
        ===================================== -->
 
-  <section class="scene opening-scene" id="opening">
+  <section
+    class="scene opening-scene is-active"
+    id="opening"
+    aria-label="Film açılışı"
+  >
 
     <div class="grain" aria-hidden="true"></div>
     <div class="projector-light" aria-hidden="true"></div>
-
     <div class="scene-frame" aria-hidden="true"></div>
 
     <header class="scene-header">
-      <span>ESRAKUŞUMM </span>
+      <span>ESRAKUŞUMM PICTURES</span>
       <span>01 / OPENING</span>
     </header>
 
-    <div class="countdown" id="countdown" aria-hidden="true">
+    <div
+      class="countdown"
+      id="countdown"
+      aria-hidden="true"
+    >
       <span id="countdownNumber">3</span>
     </div>
 
@@ -61,13 +86,9 @@
         fazlasıyla kaos.
       </p>
 
-      <div class="opening-ornament" aria-hidden="true">
-        <span></span> ✳ <span></span>
-      </div>
-
       <h1>
         ESRA
-        <em></em>
+        <em>the movie</em>
       </h1>
 
       <p class="opening-subtitle">
@@ -87,11 +108,12 @@
       type="button"
       disabled
     >
-      Filmi başlat <span>→</span>
+      Filmi başlat
+      <span aria-hidden="true">→</span>
     </button>
 
     <footer class="scene-footer">
-      <span>OYUNCULAR ESRAKUŞ</span>
+      <span>STARRING ESRAKUŞUMM</span>
       <span>35 MM · 01/05</span>
     </footer>
 
@@ -102,26 +124,32 @@
        02 — MAKE A WISH
        ===================================== -->
 
-  <section class="scene wish-scene" id="wishScene">
+  <section
+    class="scene wish-scene"
+    id="wishScene"
+    aria-label="Mum üfleme sahnesi"
+    inert
+    aria-hidden="true"
+  >
 
     <div class="grain" aria-hidden="true"></div>
     <div class="wish-spotlight" aria-hidden="true"></div>
     <div class="scene-frame" aria-hidden="true"></div>
 
     <header class="scene-header">
-      <span>ESRA</span>
-      <span>02 / BİR DİLEK TUT</span>
+      <span>ESRA: THE MOVIE</span>
+      <span>02 / MAKE A WISH</span>
     </header>
 
     <div class="wish-heading">
 
       <span class="eyebrow">
-        FİLM BAŞLAMADAN ÖNCE...
+        BEFORE THE MOVIE BEGINS...
       </span>
 
       <h2>
         Bir dilek tut,
-        <em>Esrakuşumm</em>
+        <em>Esrakuşumm.</em>
       </h2>
 
       <p>
@@ -130,14 +158,17 @@
 
     </div>
 
-    <!-- Sinematik doğum günü pastası -->
     <div class="cake-stage" id="cakeStage">
 
       <div class="cake-glow" aria-hidden="true"></div>
 
-      <div class="birthday-cake" aria-label="Beş mumlu doğum günü pastası">
+      <div
+        class="birthday-cake"
+        role="img"
+        aria-label="Üzerinde beş mum yanan doğum günü pastası"
+      >
 
-        <div class="candles" id="candles" aria-hidden="true">
+        <div class="candles" id="candles">
 
           <div class="candle">
             <span class="wick"></span>
@@ -188,7 +219,7 @@
     <div class="wish-bottom">
 
       <p id="wishMessage" aria-live="polite">
-        Dileğini tut ve mumları söndürrrr.
+        Dileğini tut ve mumları söndür.
       </p>
 
       <button
@@ -209,7 +240,8 @@
         type="button"
         hidden
       >
-        Asıl filme geçelim <span>→</span>
+        Asıl filme geçelim
+        <span aria-hidden="true">→</span>
       </button>
 
     </div>
@@ -226,20 +258,26 @@
        03 — VIP CINEMA TICKET
        ===================================== -->
 
-  <section class="scene ticket-scene" id="ticketScene">
+  <section
+    class="scene ticket-scene"
+    id="ticketScene"
+    aria-label="Özel gösterim bileti"
+    inert
+    aria-hidden="true"
+  >
 
     <div class="grain" aria-hidden="true"></div>
     <div class="scene-frame" aria-hidden="true"></div>
 
     <header class="scene-header">
-      <span>ESRAKUŞUMM </span>
+      <span>ESRAKUŞUMM PICTURES</span>
       <span>03 / PREMIERE</span>
     </header>
 
     <div class="ticket-heading">
 
       <span class="eyebrow">
-        RESMİ ÖZEL GÖSTERİM
+        OFFICIAL PRIVATE SCREENING
       </span>
 
       <h2>
@@ -248,7 +286,7 @@
       </h2>
 
       <p>
-        Esrakuş özel gösterimine hoş geldiniz.
+        Esrakuşumm'a özel gösterime hoş geldiniz.
       </p>
 
     </div>
@@ -263,19 +301,19 @@
         </div>
 
         <span class="ticket-eyebrow">
-          ÖZEL DOĞUM GÜNÜ PRÖMİYERİ
+          EXCLUSIVE BIRTHDAY PREMIERE
         </span>
 
         <div class="ticket-title">
           ESRA
-          <em></em>
+          <em>the movie</em>
         </div>
 
         <div class="ticket-info">
 
           <div>
             <small>BAŞROL</small>
-            <strong>Esrakuş</strong>
+            <strong>Esrakuşumm</strong>
           </div>
 
           <div>
@@ -290,7 +328,7 @@
 
           <div>
             <small>OYUNCU KADROSU</small>
-            <strong>Bizzz ♡</strong>
+            <strong>Bizimkiler ♡</strong>
           </div>
 
         </div>
@@ -298,13 +336,9 @@
       </div>
 
       <div class="ticket-stub">
-
         <span>ADMIT ONE</span>
-
         <div class="barcode" aria-hidden="true"></div>
-
         <span>NO. 0001</span>
-
       </div>
 
     </div>
@@ -314,7 +348,8 @@
       class="primary-action ticket-action"
       type="button"
     >
-      Gösterime başla <span>→</span>
+      Gösterime başla
+      <span aria-hidden="true">→</span>
     </button>
 
     <p class="ticket-helper">
@@ -322,6 +357,7 @@
     </p>
 
     <footer class="scene-footer">
+      <span>BEST MEMORIES INSIDE</span>
       <span>35 MM · 03/05</span>
     </footer>
 
@@ -330,10 +366,16 @@
 
   <!-- =====================================
        04 — MEMORY REEL
-       ORİJİNAL ANILAR SAYFASI
+       MEVCUT ANILAR TASARIMI
        ===================================== -->
 
-  <section class="memories" id="memories">
+  <section
+    class="memories"
+    id="memories"
+    aria-label="Birlikte biriktirdiğimiz anılar"
+    inert
+    aria-hidden="true"
+  >
 
     <div class="memory-top">
       <span>♡　♡　♡</span>
@@ -406,7 +448,7 @@
         aria-label="Önceki anı"
       >‹</button>
 
-      <div class="dots" id="dots"></div>
+      <div class="dots" id="dots" aria-hidden="true"></div>
 
       <button
         id="next"
@@ -427,7 +469,13 @@
        05 — THE AWARDS / FINAL
        ===================================== -->
 
-  <section class="scene final-scene" id="finalScene">
+  <section
+    class="scene final-scene"
+    id="finalScene"
+    aria-label="Esra'nın ödül sahnesi"
+    inert
+    aria-hidden="true"
+  >
 
     <div class="grain" aria-hidden="true"></div>
     <div class="scene-frame" aria-hidden="true"></div>
@@ -453,9 +501,7 @@
         <span class="laurel-right">❧</span>
       </div>
 
-      <h2>
-        ESROŞŞ!
-      </h2>
+      <h2>ESROŞŞ!</h2>
 
       <p class="award-subtitle">
         Oyuncu Kadrosundaki En İyi Kız
@@ -464,6 +510,7 @@
       <div class="award-divider"></div>
 
       <div class="award-categories">
+
         <div>
           <small>EN İYİ KAHKAHA</small>
           <strong>Bizzz</strong>
@@ -478,6 +525,7 @@
           <small>EN GÜZEL DEVAM FİLMİ</small>
           <strong>Henüz çekilmedi...</strong>
         </div>
+
       </div>
 
     </div>
