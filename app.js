@@ -445,7 +445,7 @@
   let finalTimer = null;
 
   // Ödül ekranının gösterim süresi
-  const AWARD_DURATION = 12000;
+  const AWARD_DURATION = 8000;
 
   function startFinal() {
     if (finalStarted) return;
