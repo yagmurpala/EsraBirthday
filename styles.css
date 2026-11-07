@@ -1,6 +1,7 @@
 
 /* =========================================
    ESRA: THE MOVIE
+   FULLSCREEN MOBILE FILM
    ========================================= */
 
 :root {
@@ -8,6 +9,7 @@
   --champagne: #eac8aa;
   --brown: #402a21;
   --dark: #291c1b;
+  --screen-height: 100dvh;
 }
 
 * {
@@ -15,13 +17,26 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
   margin: 0;
+
+  overflow: hidden;
+  overscroll-behavior: none;
+
   background: #211613;
   color: var(--cream);
+
   font-family: "DM Sans", Arial, sans-serif;
 }
 
@@ -30,32 +45,83 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: default;
+}
+
 button:focus-visible {
   outline: 2px solid #fff0d5;
   outline-offset: 4px;
-}
-
-button:disabled {
-  cursor: default;
 }
 
 [hidden] {
   display: none !important;
 }
 
+/* =========================================
+   FULLSCREEN SCENE SYSTEM
+   ========================================= */
+
 main {
-  overflow: clip;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  height: var(--screen-height);
+
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.scene {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+.scene,
+.memories {
+  position: absolute;
+  inset: 0;
 
   width: min(100%, 480px);
-  height: 100svh;
+  height: 100%;
   min-height: 0;
+
   margin: auto;
+
+  overflow: hidden;
+
+  visibility: hidden;
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  transition:
+    opacity .65s ease,
+    visibility 0s linear .65s;
+}
+
+.scene.is-active,
+.memories.is-active {
+  visibility: visible;
+  opacity: 1;
+
+  pointer-events: auto;
+
+  z-index: 2;
+
+  transition:
+    opacity .65s ease,
+    visibility 0s;
+}
+
+/* No vertical page scrolling */
+
+.scene,
+.memories {
+  overscroll-behavior: none;
+  touch-action: pan-x;
+}
+
+.media-shell video {
+  touch-action: auto;
 }
 
 /* =========================================
@@ -111,6 +177,7 @@ main {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: .17em;
+
   color: #e4c1a7;
 }
 
@@ -128,6 +195,7 @@ main {
   font-weight: 600;
   line-height: 1.7;
   letter-spacing: .22em;
+
   color: #dfbda3;
 }
 
@@ -175,6 +243,38 @@ main {
 }
 
 /* =========================================
+   MUSIC CONTROL
+   ========================================= */
+
+.music-toggle {
+  position: fixed;
+
+  top: calc(10px + env(safe-area-inset-top));
+  right: max(10px, calc((100vw - 480px)/2 + 10px));
+
+  z-index: 100;
+
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(248,229,210,.5);
+  border-radius: 50%;
+
+  background: rgba(41,28,27,.82);
+  color: #f8e5d2;
+
+  font-size: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.music-toggle.is-playing {
+  border-color: #f8e5d2;
+}
+
+/* =========================================
    01 — OPENING
    ========================================= */
 
@@ -197,21 +297,22 @@ main {
   position: absolute;
   inset: 0;
 
+  pointer-events: none;
+
   background: radial-gradient(
     ellipse at 50% 44%,
     rgba(255,219,178,.12),
     transparent 62%
   );
 
-  animation: projectorPulse 4s ease-in-out infinite alternate;
+  animation:
+    projectorPulse 4s ease-in-out infinite alternate;
 }
 
 @keyframes projectorPulse {
   from { opacity: .4; }
   to { opacity: 1; }
 }
-
-/* Film countdown */
 
 .countdown {
   position: absolute;
@@ -261,8 +362,8 @@ main {
 .countdown span {
   position: relative;
   z-index: 1;
-  padding: 0 12px;
 
+  padding: 0 12px;
   background: #4e362f;
 }
 
@@ -270,8 +371,6 @@ main {
   opacity: 0;
   visibility: hidden;
 }
-
-/* Opening content */
 
 .opening-content {
   position: relative;
@@ -299,22 +398,6 @@ main {
     "Cormorant Garamond", serif;
 
   color: #f0d5be;
-}
-
-.opening-ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-
-  color: #d6b296;
-  font-size: 17px;
-}
-
-.opening-ornament span {
-  width: 32px;
-  height: 1px;
-  background: #d6b29688;
 }
 
 .opening-content h1 {
@@ -420,8 +503,6 @@ main {
   opacity: .3;
 }
 
-/* Heading */
-
 .wish-heading {
   position: relative;
   z-index: 5;
@@ -453,8 +534,6 @@ main {
   color: #d9b49b;
 }
 
-/* Cake stage */
-
 .cake-stage {
   position: relative;
   z-index: 5;
@@ -473,7 +552,6 @@ main {
 
   width: 310px;
   height: 310px;
-
   border-radius: 50%;
 
   background: radial-gradient(
@@ -485,7 +563,8 @@ main {
 
   filter: blur(15px);
 
-  animation: glowPulse 2.2s ease-in-out infinite alternate;
+  animation:
+    glowPulse 2.2s ease-in-out infinite alternate;
 }
 
 @keyframes glowPulse {
@@ -503,8 +582,6 @@ main {
   animation: none;
   opacity: .15;
 }
-
-/* Birthday cake */
 
 .birthday-cake {
   position: relative;
@@ -580,7 +657,6 @@ main {
   height: 31px;
 
   background: #f4dcc4;
-
   border-radius: 0 0 50% 50%;
 
   box-shadow: 0 5px 5px #9b685522;
@@ -614,7 +690,6 @@ main {
   left: 50%;
 
   transform: translateX(-50%);
-
   white-space: nowrap;
 
   font: italic 30px
@@ -733,7 +808,6 @@ main {
   height: 9px;
 
   transform: translateX(-50%);
-
   background: #241813;
 }
 
@@ -747,7 +821,9 @@ main {
   width: 14px;
   height: 24px;
 
-  border-radius: 60% 60% 60% 60% / 80% 80% 45% 45%;
+  border-radius:
+    60% 60% 60% 60% /
+    80% 80% 45% 45%;
 
   background: radial-gradient(
     circle at 50% 30%,
@@ -763,7 +839,8 @@ main {
 
   transform-origin: 50% 100%;
 
-  animation: flicker .95s ease-in-out infinite alternate;
+  animation:
+    flicker .95s ease-in-out infinite alternate;
 
   transition:
     opacity .3s,
@@ -780,13 +857,22 @@ main {
 
 @keyframes flicker {
   0% {
-    transform: translateX(-50%) rotate(-3deg) scale(.95,1);
+    transform:
+      translateX(-50%)
+      rotate(-3deg)
+      scale(.95,1);
   }
   50% {
-    transform: translateX(-50%) rotate(3deg) scale(1.08,.94);
+    transform:
+      translateX(-50%)
+      rotate(3deg)
+      scale(1.08,.94);
   }
   100% {
-    transform: translateX(-50%) rotate(-1deg) scale(.94,1.1);
+    transform:
+      translateX(-50%)
+      rotate(-1deg)
+      scale(.94,1.1);
   }
 }
 
@@ -800,8 +886,6 @@ main {
     scale(.3);
 }
 
-/* Smoke */
-
 .smoke {
   position: absolute;
   z-index: 8;
@@ -811,7 +895,6 @@ main {
 
   width: 10px;
   height: 30px;
-
   border-radius: 50%;
 
   background: rgba(241,225,208,.55);
@@ -833,8 +916,6 @@ main {
   }
 }
 
-/* Sparkles */
-
 .cake-sparkle {
   position: absolute;
   z-index: 5;
@@ -842,7 +923,8 @@ main {
   color: #e9bd87;
   opacity: .6;
 
-  animation: sparkle 2.5s ease-in-out infinite alternate;
+  animation:
+    sparkle 2.5s ease-in-out infinite alternate;
 }
 
 .sparkle-one {
@@ -869,8 +951,6 @@ main {
   from { opacity: .2; }
   to { opacity: .85; }
 }
-
-/* Wish controls */
 
 .wish-bottom {
   position: relative;
@@ -986,8 +1066,6 @@ main {
   color: #ddb89f;
 }
 
-/* Ticket */
-
 .ticket {
   position: relative;
   z-index: 3;
@@ -996,7 +1074,6 @@ main {
   max-width: 390px;
 
   color: #483025;
-
   filter: drop-shadow(0 20px 24px #170e0c88);
 
   transform-origin: center;
@@ -1006,8 +1083,8 @@ main {
   position: relative;
 
   padding: 22px;
-
   border-radius: 10px 10px 0 0;
+
   background: #efdcc5;
 }
 
@@ -1039,7 +1116,6 @@ main {
   gap: 10px;
 
   padding-bottom: 13px;
-
   border-bottom: 1px solid #88665366;
 
   font-size: 9px;
@@ -1146,7 +1222,10 @@ main {
     transform: scale(1.04) rotate(-3deg);
   }
   100% {
-    transform: translateY(-35px) rotate(-8deg) scale(.75);
+    transform:
+      translateY(-35px)
+      rotate(-8deg)
+      scale(.75);
     opacity: 0;
   }
 }
@@ -1162,15 +1241,10 @@ main {
 
 /* =========================================
    04 — MEMORY REEL
-   ORİJİNAL TASARIM
+   ORIGINAL DESIGN
    ========================================= */
 
 .memories {
-  width: min(100%, 480px);
-  height: 100svh;
-  min-height: 0;
-  margin: auto;
-
   padding:
     calc(16px + env(safe-area-inset-top))
     13px
@@ -1180,7 +1254,6 @@ main {
   flex-direction: column;
   justify-content: space-between;
   gap: 9px;
-  overflow: hidden;
 
   background: radial-gradient(
     ellipse at 50% 8%,
@@ -1194,6 +1267,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   min-height: 28px;
   padding: 0 13px;
 
@@ -1210,13 +1284,18 @@ main {
 
   overflow: hidden;
   isolation: isolate;
+
   border: 1px solid rgba(244,216,184,.58);
   border-radius: 10px;
   background: #2b1c1a;
 
   box-shadow: 0 15px 45px rgba(19,9,6,.38);
 
-  transition: opacity .32s ease, transform .32s ease;
+  transition:
+    opacity .32s ease,
+    transform .32s ease;
+
+  touch-action: pan-y;
 }
 
 .memory-card.changing {
@@ -1231,6 +1310,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+
   overflow: hidden;
   background: #30201d;
 }
@@ -1243,7 +1323,11 @@ main {
   background-size: cover;
   background-position: center;
 
-  filter: blur(29px) brightness(.52) saturate(.76);
+  filter:
+    blur(29px)
+    brightness(.52)
+    saturate(.76);
+
   transform: scale(1.08);
 }
 
@@ -1252,6 +1336,7 @@ main {
   position: absolute;
   inset: 0;
   z-index: 1;
+
   pointer-events: none;
 
   background:
@@ -1280,13 +1365,15 @@ main {
   display: block;
   width: 100%;
   height: 100%;
+
   padding: 40px 25px 27px;
 
   object-fit: contain;
   object-position: center;
   background: transparent;
 
-  filter: drop-shadow(0 8px 12px rgba(14,8,6,.35));
+  filter:
+    drop-shadow(0 8px 12px rgba(14,8,6,.35));
 }
 
 .film-rail {
@@ -1345,8 +1432,10 @@ main {
   gap: 8px;
 
   pointer-events: none;
+
   font-size: 9px;
   letter-spacing: .16em;
+
   text-shadow: 0 1px 5px #120a07;
 }
 
@@ -1394,6 +1483,7 @@ main {
 
   font-size: clamp(29px,7vw,39px);
   line-height: 1.15;
+
   color: #ffe6cf;
   text-wrap: balance;
 }
@@ -1401,7 +1491,11 @@ main {
 .memory-note {
   margin: 0;
 
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
   font-size: 14px;
   color: #cfae99;
 }
@@ -1411,6 +1505,7 @@ main {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+
   padding: 0 12px;
   flex: 0 0 auto;
 }
@@ -1421,6 +1516,7 @@ main {
 
   border: 1px solid #eac8aa88;
   border-radius: 50%;
+
   background: transparent;
   color: #fbe7ce;
 
@@ -1440,6 +1536,7 @@ main {
 .dots b {
   width: 5px;
   height: 5px;
+
   border-radius: 6px;
   background: #e2c4af88;
 }
@@ -1451,6 +1548,7 @@ main {
 
 .notice {
   flex: 0 0 auto;
+
   font-size: 9px;
   letter-spacing: .1em;
   text-align: center;
@@ -1490,8 +1588,8 @@ main {
   transform: translateY(20px);
 
   transition:
-    opacity .9s,
-    transform .9s;
+    opacity 1.8s ease,
+    transform 1.8s ease;
 }
 
 .final-scene.visible .award-content {
@@ -1557,8 +1655,8 @@ main {
 .award-divider {
   width: 65px;
   height: 1px;
-  margin: 28px auto;
 
+  margin: 28px auto;
   background: #e8c5a988;
 }
 
@@ -1599,8 +1697,8 @@ main {
   pointer-events: none;
 
   transition:
-    opacity 1s ease,
-    transform 1s ease;
+    opacity 1.8s ease,
+    transform 1.8s ease;
 }
 
 .final-scene.message-visible .award-content {
@@ -1647,6 +1745,7 @@ main {
 .final-heart {
   display: block;
   margin-top: 20px;
+
   font-size: 42px;
   color: #dbb69b;
 }
@@ -1671,7 +1770,7 @@ main {
 }
 
 /* =========================================
-   MOBILE RESPONSIVE
+   MOBILE ADJUSTMENTS
    ========================================= */
 
 @media (min-width: 481px) {
@@ -1823,12 +1922,18 @@ main {
 }
 
 /* =========================================
-   ACCESSIBILITY
+   REDUCED MOTION
    ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  .scene,
+  .memories,
+  .opening-content,
+  .countdown,
+  .memory-card,
+  .award-content,
+  .final-message {
+    transition: none;
   }
 
   .grain,
@@ -1839,20 +1944,12 @@ main {
     animation: none;
   }
 
-  .smoke {
-    display: none;
-  }
-
   .flame.is-out {
     opacity: 0;
   }
 
-  .memory-card,
-  .opening-content,
-  .countdown,
-  .award-content,
-  .final-message {
-    transition: none;
+  .smoke {
+    display: none;
   }
 
   .ticket.is-used {
