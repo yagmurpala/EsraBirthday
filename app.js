@@ -13,16 +13,45 @@
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  const scrollToSection = (selector) => {
-    $(selector).scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth",
-      block: "start"
-    });
-  };
+  // ======================================
+  // 02 — FULLSCREEN SCENE CONTROLLER
+  // ======================================
 
+  const sceneIds = [
+    "opening",
+    "wishScene",
+    "ticketScene",
+    "memories",
+    "finalScene"
+  ];
+
+  const scenes = new Map(
+    sceneIds.map(id => [id, document.getElementById(id)])
+  );
+
+  let activeScene = "opening";
+
+  function showScene(id) {
+    if (!scenes.has(id) || activeScene === id) {
+      return;
+    }
+
+    const current = scenes.get(activeScene);
+    const next = scenes.get(id);
+
+    current.classList.remove("is-active");
+    current.setAttribute("aria-hidden", "true");
+    current.inert = true;
+
+    next.classList.add("is-active");
+    next.removeAttribute("aria-hidden");
+    next.inert = false;
+
+    activeScene = id;
+  }
 
   // ======================================
-  // 02 — OPENING
+  // 03 — OPENING
   // ======================================
 
   const countdown = $("#countdown");
@@ -40,7 +69,6 @@
     revealOpening();
   } else {
     let step = 0;
-
     const sequence = ["3", "2", "1"];
 
     const timer = setInterval(() => {
@@ -56,12 +84,67 @@
   }
 
   startFilmButton.addEventListener("click", () => {
-    scrollToSection("#wishScene");
+    startBackgroundMusic();
+    showScene("wishScene");
   });
 
+  // ======================================
+  // 04 — BACKGROUND MUSIC
+  // ======================================
+
+  const music = $("#backgroundMusic");
+  const musicToggle = $("#musicToggle");
+
+  music.volume = 0.45;
+
+  function updateMusicButton() {
+    const playing = !music.paused;
+
+    musicToggle.textContent = playing ? "♫" : "♪";
+    musicToggle.classList.toggle("is-playing", playing);
+
+    musicToggle.setAttribute(
+      "aria-pressed",
+      String(playing)
+    );
+
+    musicToggle.setAttribute(
+      "aria-label",
+      playing ? "Müziği duraklat" : "Müziği çal"
+    );
+  }
+
+  function startBackgroundMusic() {
+    if (music.error) return;
+
+    music.play()
+      .then(() => {
+        musicToggle.hidden = false;
+        updateMusicButton();
+      })
+      .catch(() => {
+        updateMusicButton();
+      });
+  }
+
+  musicToggle.addEventListener("click", () => {
+    if (music.paused) {
+      startBackgroundMusic();
+    } else {
+      music.pause();
+    }
+  });
+
+  music.addEventListener("play", updateMusicButton);
+  music.addEventListener("pause", updateMusicButton);
+
+  // Müzik dosyası yoksa kontrolü gösterme.
+  music.addEventListener("error", () => {
+    musicToggle.hidden = true;
+  });
 
   // ======================================
-  // 03 — MAKE A WISH
+  // 05 — MAKE A WISH
   // ======================================
 
   const wishScene = $("#wishScene");
@@ -82,6 +165,7 @@
 
     const smoke = document.createElement("span");
     smoke.className = "smoke";
+    smoke.setAttribute("aria-hidden", "true");
 
     flame.parentElement.appendChild(smoke);
 
@@ -114,18 +198,21 @@
       wishHelper.hidden = true;
       blowButton.hidden = true;
       continueAfterWish.hidden = false;
+
     }, reduceMotion ? 0 : 1050);
   }
 
-  blowButton.addEventListener("click", extinguishCandles);
+  blowButton.addEventListener(
+    "click",
+    extinguishCandles
+  );
 
   continueAfterWish.addEventListener("click", () => {
-    scrollToSection("#ticketScene");
+    showScene("ticketScene");
   });
 
-
   // ======================================
-  // 04 — PRIVATE SCREENING
+  // 06 — PRIVATE SCREENING
   // ======================================
 
   const ticket = $("#ticket");
@@ -142,13 +229,12 @@
     ticket.classList.add("is-used");
 
     setTimeout(() => {
-      scrollToSection("#memories");
+      showScene("memories");
     }, reduceMotion ? 0 : 650);
   });
 
-
   // ======================================
-  // 05 — MEMORIES
+  // 07 — MEMORIES DATA
   // ======================================
 
   const memories = [
@@ -197,12 +283,9 @@
     }
   ];
 
-
   // ======================================
-  // 06 — GALLERY ELEMENTS
+  // 08 — GALLERY ELEMENTS
   // ======================================
-
-  const memoriesSection = $("#memories");
 
   const dots = $("#dots");
   const card = $("#memoryCard");
@@ -229,9 +312,8 @@
     })
     .join("");
 
-
   // ======================================
-  // 07 — RENDER MEMORY
+  // 09 — RENDER MEMORY
   // ======================================
 
   function renderMemory(index, immediate = false) {
@@ -280,6 +362,7 @@
         video.pause();
         video.removeAttribute("src");
         video.removeAttribute("poster");
+
         video.style.display = "none";
         video.load();
 
@@ -336,9 +419,8 @@
     }
   }
 
-
   // ======================================
-  // 08 — GALLERY NAVIGATION
+  // 10 — GALLERY NAVIGATION
   // ======================================
 
   prevButton.addEventListener("click", () => {
@@ -353,62 +435,52 @@
     }
   });
 
-
   // ======================================
-  // 09 — AWARD FINAL
+  // 11 — FINAL SCENE
   // ======================================
 
   const finalScene = $("#finalScene");
 
   let finalStarted = false;
+  let finalTimer = null;
+
+  // Ödül ekranının gösterim süresi
+  const AWARD_DURATION = 12000;
 
   function startFinal() {
     if (finalStarted) return;
 
     finalStarted = true;
-
     finalScene.classList.add("visible");
 
-    setTimeout(() => {
+    finalTimer = setTimeout(() => {
       finalScene.classList.add("message-visible");
-    }, reduceMotion ? 0 : 7500);
+    }, reduceMotion ? 0 : AWARD_DURATION);
   }
 
   function showFinal() {
     video.pause();
 
+    showScene("finalScene");
     startFinal();
-    scrollToSection("#finalScene");
   }
 
   video.addEventListener("ended", () => {
-    if (currentIndex === memories.length - 1) {
+    if (
+      currentIndex === memories.length - 1 &&
+      activeScene === "memories"
+    ) {
       showFinal();
     }
   });
 
   $("#backToMemories").addEventListener("click", () => {
-    scrollToSection("#memories");
+    showScene("memories");
   });
 
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            startFinal();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(finalScene);
-  }
-
-
   // ======================================
-  // 10 — MOBILE SWIPE
+  // 12 — MOBILE SWIPE
+  // SADECE ANILAR ARASI GEÇİŞ
   // ======================================
 
   let touchStart = null;
@@ -448,6 +520,7 @@
         Math.abs(dx) > 55 &&
         Math.abs(dx) > Math.abs(dy) * 1.4
       ) {
+
         if (
           dx < 0 &&
           currentIndex === memories.length - 1
@@ -465,9 +538,27 @@
     { passive: true }
   );
 
+  // ======================================
+  // 13 — VIEWPORT HEIGHT
+  // ======================================
+
+  function updateViewportHeight() {
+    document.documentElement.style.setProperty(
+      "--screen-height",
+      `${window.innerHeight}px`
+    );
+  }
+
+  updateViewportHeight();
+
+  window.addEventListener(
+    "resize",
+    updateViewportHeight,
+    { passive: true }
+  );
 
   // ======================================
-  // 11 — INITIALIZATION
+  // 14 — INITIALIZATION
   // ======================================
 
   renderMemory(0, true);
